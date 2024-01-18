@@ -1,0 +1,14 @@
+### Django ###
+*.pot
+*.pyc
+/media/
+/fixtures/
+/static/
+credentials.json
+token.pickle
+/temp/
+__pycache__/
+local_settings.py
+/venv
+.idea
+*.sqlite3

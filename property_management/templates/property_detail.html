@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ property.name }} Details</title>
+  <style>
+    body {
+      background-color: #f8f9fa; 
+      color: #495057; 
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    h2 {
+      color: #007bff; 
+    }
+
+    p {
+      margin-bottom: 10px;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 5px;
+    }
+
+    .unit {
+      background-color: #ffffff; 
+      border: 1px solid #ced4da; 
+      border-radius: 5px;
+      padding: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .unit:hover {
+      transform: scale(1.05); 
+    }
+
+    .unit-header {
+      background-color: #007bff; 
+      color: #fff; 
+      padding: 15px;
+      border-radius: 5px 5px 0 0;
+    }
+
+    .tenant {
+      background-color: #d4edda; 
+      padding: 15px;
+      margin-top: 15px;
+      border-radius: 3px;
+    }
+
+   
+    .property-details {
+      margin-top: 30px;
+    }
+
+    .unit-details {
+      margin-left: 20px;
+    }
+
+    .tenant-details {
+      margin-left: 40px;
+    }
+
+    .add-unit-button {
+      background-color: #28a745; 
+      color: #fff; 
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      margin-bottom: 20px;
+      display: inline-block;
+    }
+
+    .add-unit-button:hover {
+      background-color: #218838; 
+    }
+  </style>
+</head>
+<body>
+
+  <div class="property-details">
+    <h2>{{ property.name }} Details</h2>
+    <p>Address: {{ property.address }}</p>
+    <p>Location: {{ property.location }}</p>
+    <p>Features: {{ property.features }}</p>
+
+    <a href="{% url 'add_unit' property_id=property.id %}" class="add-unit-button">Add Unit</a>
+
+    <h3>Units:</h3>
+    {% for unit in property.units.all %}
+      <div class="unit">
+        <div class="unit-header">
+          <li>{{ unit.unit_type }} - Rent: ${{ unit.rent_cost }}</li>
+        </div>
+        <div class="unit-details">
+          <ul>
+            <li>Unit ID: {{ unit.id }}</li>
+            <li>Additional Unit Details: {{ unit.additional_details }}</li>
+          </ul>
+        </div>
+        {% if unit.tenants.all %}
+          <div class="tenant">
+            <h4>Tenant Details:</h4>
+            {% for tenant_assignment in unit.tenants.all %}
+              <div class="tenant-details">
+                <ul>
+                  <li>Tenant: {{ tenant_assignment.tenant.name }}</li>
+                  <li>Contact: {{ tenant_assignment.tenant.address }}</li>
+                  <li>Document: {{ tenant_assignment.tenant.document_proofs.name }}</li>
+                </ul>
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <p>No tenant assigned</p>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+
+</body>
+</html>

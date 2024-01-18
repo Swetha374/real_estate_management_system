@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ tenant.name }} Profile</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .profile-container {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      width: 400px;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+
+    h2 {
+      color: #0066cc;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    p {
+      margin-bottom: 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #0066cc;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="profile-container">
+    <h2>{{ tenant.name }} Profile</h2>
+
+    <label>Personal Information:</label>
+    <p>Name: {{ tenant.name }}</p>
+    <p>Address: {{ tenant.address }}</p>
+    <p>Document Proofs: <a href="{{ tenant.document_proofs.url }}" target="_blank">View Document Proofs</a></p>
+
+    <label>Rental Information:</label>
+    {% if assignments %}
+      <table>
+        <thead>
+          <tr>
+            <th>Unit</th>
+            <th>Property</th>
+            <th>Agreement End Date</th>
+            <th>Monthly Rent Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for assignment in assignments %}
+            <tr>
+              <td>{{ assignment.unit.unit_type }}</td>
+              <td>{{ assignment.unit.property.name }}</td>
+              <td>{{ assignment.agreement_end_date }}</td>
+              <td>{{ assignment.monthly_rent_date }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No rental information available.</p>
+    {% endif %}
+
+  </div>
+
+</body>
+</html>
