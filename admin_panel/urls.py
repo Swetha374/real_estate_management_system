@@ -18,6 +18,6 @@ from admin_panel.views import *
 
 
 urlpatterns = [
-    path("login/", login_view, name="login"),
+    path("", login_view, name="login"),
     path("homepage/", homepage, name="home"),
 ]
